@@ -4,7 +4,7 @@
  *
  * CSS file for entire Bawdy Streaming site 
  * 
- * Copyright 2016, Rubeun Tan
+ * Copyright 2017, Rubeun Tan
  * http://www.rubeun.com
  */
 
@@ -257,6 +257,7 @@ html[xmlns] .clearfix {
 
 iframe#video-iframe {
 	width: 640px;
+	height: 400px;
 }
 
 .vod {
@@ -334,14 +335,17 @@ iframe#video-iframe {
 }
 @keyframes blink {
     from {
+        color: #fff;
         opacity: 1;
     }
     to {
+        color: #f00;
         opacity: 0.3;
     }
 }
 
 
+/* ########################## MOBILE ###########################*/
 
 /* Tablet */
 
@@ -368,9 +372,9 @@ iframe#video-iframe {
 }
 */
 
-/* Mobile - iPhone 6 */
+/* Mobile - iPhone 5 */
 
-@media only screen and (max-device-width: 420px) {
+@media only screen and (max-device-width: 320px) {
 	.container {
 		width: 100%;	
 		margin: 0 auto;		
@@ -378,8 +382,13 @@ iframe#video-iframe {
 		min-height: 1000px;
 	}
 
-	nav ul {
-		font-size: 38px;
+	.home-promo {
+		width: 100%;
+	}
+	
+	.home-promo-copy {
+		width: 100%;
+		padding: 80px 0 0 0;
 	}
 
 	iframe#video-iframe {
@@ -388,7 +397,7 @@ iframe#video-iframe {
 	}
 	
 	.vod {
-		width: 97%;
+		width: 90%;
 		margin: 0 auto;
 		padding: 10px;
 		float: left;
@@ -406,14 +415,95 @@ iframe#video-iframe {
 	}
 	
 	.chat {
-		width: 80%;
+		width: 90%;
 		padding: 20px auto;
+	}
+	
+	#msg-input {
+		width: 97%;
 	}
 	
 	.video-disclaimer {
 		display: none;
 	}
 
+	#about-content {
+		width: 96%;
+	}
+	
+	#yelpwidget {
+		margin: 0 auto;
+	}
+
+
+}
+
+
+/* Mobile - iPhone 6+ */
+
+@media only screen and (max-device-width: 420px) {
+	.container {
+		width: 95%;	
+		margin: 0 auto;		
+		padding: 10px;
+	}
+
+	nav ul {
+	}
+
+	.home-promo {
+		width: 100%;
+		height: 100%;
+	}
+	
+	.home-promo-copy {
+		width: 100%;
+		padding: 280px 0 0 0;
+	}
+
+	iframe#video-iframe {
+		width: 100%;
+		margin: 0 auto;
+	}
+	
+	.vod {
+		width: 95%;
+		margin: 0 auto;
+		padding: 10px;
+		float: left;
+	}
+	
+	.vod #vod-box {
+		min-height: 85%;
+		border-radius: 7px;
+		background: #000;
+	}
+
+	.video-stream {
+		width: 100%;
+		margin: 0 auto;
+	}
+	
+	.chat {
+		width: 95%;
+		padding: 20px auto;
+	}
+	
+	#msg-input {
+		width: 97%;
+	}
+	
+	.video-disclaimer {
+		display: none;
+	}
+
+	#about-content {
+		width: 96%;
+	}
+	
+	#yelpwidget {
+		margin: 0 auto;
+	}
 }
 
 /* iPad Landscape */
