@@ -5,7 +5,7 @@
  * JS file for VOD/Video On Demand page
  * Dynamically load VOD videos based on user selection
  * 
- * Copyright 2016, Rubeun Tan
+ * Copyright 2017, Rubeun Tan
  * http://www.rubeun.com
  */
 
@@ -13,8 +13,8 @@
 $( document ).ready(function() {
 
 	// Initialise & Set Default Video Source and Title for page
-	var dacastSrc = "//iframe.dacast.com/b/52952/f/364902";
-	var videoTitle = "Bawdy Storytelling January 2017";
+	var dacastSrc = "//iframe.dacast.com/b/52952/f/378991";
+	var videoTitle = "Bawdy Storytelling February 2017 7pm";
 	document.getElementById('video-title').innerHTML = videoTitle;
 
 	$('#vod-box').accordion({
@@ -33,7 +33,15 @@ $( document ).ready(function() {
 		// Video page ID associates with DaCast video iframe source   
 		switch (this.id) {
 			//console.log("ID clicked: " + this.id);
-						
+
+			case "bawdy1-02-2017":				
+				videoTitle = "Bawdy Storytelling February 2017 7pm";
+				dacastSrc = "//iframe.dacast.com/b/52952/f/378991";
+			break;	 
+			case "bawdy2-02-2017":				
+				videoTitle = "Bawdy Storytelling February 2017 10pm";
+				dacastSrc = "//iframe.dacast.com/b/52952/f/378892";
+			break;	 						
 			case "bawdy-01-2017":				
 				videoTitle = "Bawdy Storytelling January 2017";
 				dacastSrc = "//iframe.dacast.com/b/52952/f/364902";
@@ -54,7 +62,7 @@ $( document ).ready(function() {
 				videoTitle = "Bawdy Storytelling September FSF 2016";
 				dacastSrc = "//iframe.dacast.com/b/52952/f/328452";
 			break;	 
-			case "bawdy-9-2016":				
+			case "bawdy1-9-2016":				
 				videoTitle = "Bawdy Storytelling September 2016";
 				dacastSrc = "//iframe.dacast.com/b/52952/f/327345";
 			break;	 
@@ -96,5 +104,15 @@ $( document ).ready(function() {
 		document.getElementById('video-title').innerHTML = videoTitle;
 		
 	});  
+	
+	
+	
+	// Browser Compatibility Detection (Currently DaCast only works with Firefox & Chrome)
+	
+	// Firefox 1.0+
+   var isFirefox = typeof InstallTrigger !== 'undefined';
+   
+	// Chrome 1+
+   var isChrome = !!window.chrome && !!window.chrome.webstore;   
     
 });
