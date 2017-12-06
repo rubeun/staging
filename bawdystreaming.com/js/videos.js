@@ -1,5 +1,5 @@
 /**
- * video.js v1.0.0
+ * video.js v2.0
  * http://www.bawdystreaming.com
  *
  * JS file for VOD/Video On Demand page
@@ -10,12 +10,163 @@
  */
 
 
-$( document ).ready(function() {
+function showListObj () {
+	var self = this;
+	self.showList = [];
+	self.defaultVideoSRC = "";
+	self.defaultVideoTitle = "";
+	
+	self.getShows = function(url, gotAllShows) {
+		$.getJSON(url, function(response) {
+			//console.log(response);
+			for (var i = 0; i < response.shows.length; i++) {
+				self.showList.push( new showObj(response.shows[i], i) );
+				self.showList[i].updatePerformersListView(function () { 
+					console.log("created performers list for show" + i);
+					self.showList[i].updateHTMLView();
+				})		
+				// populate musical act? maybe inside showObj function?
+				console.log(self.showList[i].htmlView);
+			} 
+			gotAllShows();		
+		});
+		
+		// set default video as the first video in list
+		//self.defaultVideoSRC = self.showList[0].dacastSRC;
+		//self.defaultVideoTitle = self.showList[0].title;
+				
+	}
+	
+	self.updateDom =  function() {
+		var thisHTML = "";
+		for (var i = 0; i < self.showList.length; i++) {
+			console.log(self.showList[i].htmlView);
+			thisHTML += self.showList[i].htmlView;
 
+		}
+		$("#vod-box").html(thisHTML);
+	
+	}
+	
+}
+
+function showObj(show, i) {
+	var self = this;
+	self.index = i;
+	self.id = show.id;
+	self.date = show.date;
+	self.time = show.time;
+	self.title = show.title;
+	self.name = show.name;
+	self.secondHalfStartTime = show.secondHalfStartTime;
+	self.dacastSRC = show.dacastSRC;
+	self.facebookURL = show.facebookURL;
+	self.performersList = [];
+	self.musicalActList = [];
+	self.performersListView = "";
+	self.musicalActListView = "";
+	self.notes = show.notes;
+	self.htmlView = "";
+	
+	
+	self.updatePerformersListView = function(gotAllPerformers) {
+	
+		//console.log("create performers list");
+		//console.log(show.performers);
+		
+		// call function to populate self.performersListView with <li>'s of all the peformers (in performerObj function)
+		for (var i = 0; i < show.performers.length; i++) {
+			self.performersList.push( new performerObj(show.performers[i], i) );
+			self.performersList[i].updatePerformer(function() {
+				//console.log("performer " + i + " updated")
+				console.log(self.performersList[i].name);
+				//self.performersListView += "<li>" + self.performersList[i].name + "</li>";
+				gotAllPerformers();
+			});
+			//console.log(self.performersList[i]);
+		}
+		
+		
+		//console.log(self.performersList);
+		
+		
+		
+		// call function to populate self.musicalActListView with <li> of performer.
+		
+	
+	
+	}
+	
+	self.updateHTMLView = function(updatedHTMLView) {
+		
+		// populate self.htmlView with template replacing with self variables
+		$.get("../video_template.html", function(template){
+			
+			self.htmlView = template.replace("{show-id}", self.id).replace("{show-title}", self.title).replace("{show-name}", self.name).replace("{second-half-start}", self.secondHalfStartTime).replace("{performers-list}", self.performersListView).replace("{musical-list}", self.musicalActListView).replace("{facebook-url}", self.facebookURL).replace("{show-note}", self.notes);
+			
+		}).then(function() {
+			updatedHTMLView();
+			console.log("html view populated");
+			//console.log(self.htmlView);
+		});
+		
+		
+		
+		
+	}
+	
+}
+
+function performerObj(performer, i) {
+	var performerURL = "../performers.json";
+
+	var self = this;
+	self.id = performer;
+	self.name = "";
+	self.pictureURL = "/img/performers/" + performer + ".jpg";
+	
+	self.showName = function() { return self.name; }
+	
+	self.updatePerformer = function(performerUpdated) {
+		$.getJSON(performerURL, function(response) {
+			
+			for (var i = 0; i < response.performers.length; i++) {
+				
+				if (response.performers[i].id === self.id) {
+					//console.log(self.id + " found");
+					self.name = response.performers[i].name;
+					performerUpdated();
+				}
+				
+			}
+						
+		});
+	}
+	
+}
+
+
+$( document ).ready(function() {	
+
+	var showURL = "../shows.json";
+
+	var shows = new showListObj();
+	
+	shows.getShows(showURL, function() {
+		
+		console.log("got shows");
+		shows.updateDom();
+	
+	});
+	
+	
+
+/*
 	// Initialise & Set Default Video Source and Title for page
-	var dacastSrc = "//iframe.dacast.com/b/52952/f/378991";
-	var videoTitle = "Bawdy Storytelling February 2017 7pm";
-	document.getElementById('video-title').innerHTML = videoTitle;
+	var dacastSrc = "//iframe.dacast.com/b/52952/f/477152";
+	var videoTitle = "Bawdy Storytelling November 2017";
+	document.getElementById('video-title').innerHTML = "Now Playing: " + videoTitle;
+*/
 
 	$('#vod-box').accordion({
 		animate: 500,
@@ -26,14 +177,33 @@ $( document ).ready(function() {
 	});
 
 
+/*
 	$("#vod-box h4").on("click", function() {
 
-		//console.log("H4 Clicked");
 		
 		// Video page ID associates with DaCast video iframe source   
 		switch (this.id) {
-			//console.log("ID clicked: " + this.id);
-
+			
+			case "bawdy-11-2017":				
+				videoTitle = "Bawdy Storytelling November 2017";
+				dacastSrc = "//iframe.dacast.com/b/52952/f/477152";
+			break;	 
+			case "bawdy-10-2017":				
+				videoTitle = "Bawdy Storytelling October 2017";
+				dacastSrc = "//iframe.dacast.com/b/52952/f/463595";
+			break;	 
+			case "bawdy-09-2017":				
+				videoTitle = "Bawdy Storytelling September 2017";
+				dacastSrc = "//iframe.dacast.com/b/52952/f/449294";
+			break;	 
+			case "bawdy-07-2017":				
+				videoTitle = "Bawdy Storytelling July 2017";
+				dacastSrc = "//iframe.dacast.com/b/52952/f/430243";
+			break;	 
+			case "bawdy-05-2017":				
+				videoTitle = "Bawdy Storytelling May 2017";
+				dacastSrc = "//iframe.dacast.com/b/52952/f/410368";
+			break;	 
 			case "bawdy1-02-2017":				
 				videoTitle = "Bawdy Storytelling February 2017 7pm";
 				dacastSrc = "//iframe.dacast.com/b/52952/f/378991";
@@ -101,18 +271,10 @@ $( document ).ready(function() {
 		
 		// Change iFrame source to new Video's source & update the video's title		
 		document.getElementById('video-iframe').src = dacastSrc;
-		document.getElementById('video-title').innerHTML = videoTitle;
+		document.getElementById('video-title').innerHTML = "Now Playing: " + videoTitle;
 		
 	});  
+*/
 	
-	
-	
-	// Browser Compatibility Detection (Currently DaCast only works with Firefox & Chrome)
-	
-	// Firefox 1.0+
-   var isFirefox = typeof InstallTrigger !== 'undefined';
-   
-	// Chrome 1+
-   var isChrome = !!window.chrome && !!window.chrome.webstore;   
     
 });

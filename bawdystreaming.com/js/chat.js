@@ -53,7 +53,7 @@ var ChatEngine=function(){
                xhr=new XMLHttpRequest();
           }
           catch(err){
-               alert(err);
+               console.log(err);
           }
           xhr.open('GET','../chat-controller.php?msg='+msg+'&name='+name,true);
           xhr.onreadystatechange = function(){
@@ -71,7 +71,7 @@ var ChatEngine=function(){
           sevr = new EventSource('../chat-controller.php');
           sevr.onmessage = function(e){ 
 	          if(oldata!=e.data){
-	          		console.log("Old Data: " + oldata + "vs New Data: " + e.data)
+	          		console.log("Old Data: " + oldata + "vs New Data: " + e.data);
 	               chatBox.innerHTML+=e.data;
 	               oldata = e.data;
 	               console.log("Incoming Message");

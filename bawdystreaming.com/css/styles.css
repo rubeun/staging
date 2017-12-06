@@ -97,6 +97,11 @@ nav ul li a.active:hover {
 	color: #fff;
 }
 
+/* fix blue bar at bottom of menu bar */
+#cssmenu > ul > li > a::before {
+	background: none;
+}
+
 /* clearfix */
 .clearfix:after {
   	content: ".";
@@ -138,7 +143,7 @@ html[xmlns] .clearfix {
 .home-promo-copy {
 	width: 700px;
 	margin: 0 10px 10px 0;
-	padding: 230px 50px 10px 50px;
+	padding: 205px 50px 10px 50px;
 }
 
 .home-promo-copy h3,
@@ -306,15 +311,15 @@ iframe#video-iframe {
 /* ### ABOUT PAGE ### */
 
 #about-content {
-	width: 660px;
-	margin: 0 20px 0 0;
+	width: 860px;
+	margin: 20px 20px 0 0;
 	float: left;
 	
 }
 
 #yelpwidget {
 	width: 240px;
-	margin: 0 0 0 55px;
+	margin: 70px 0 0 55px;
 	padding: 10px;
 	float: left;
 	background: #fff;
@@ -322,6 +327,30 @@ iframe#video-iframe {
 	border-radius: 5px;
 }
 
+/* ### TUTORIAL ### */
+.tutorial-body {
+	width: 700px;
+}
+
+.tutorial-copy {
+
+}
+
+#tutorial-new {
+	padding: 10px;
+	background: #333;
+	opacity: 0.7;
+}
+
+#tutorial-returning {
+	padding: 10px;
+	background: #333;
+	opacity: 0.7;
+}
+
+.tutorial-ready {
+	padding: 10px 0 50px 0;
+}
 
 /* ### MISC ### */
 
@@ -343,6 +372,8 @@ iframe#video-iframe {
         opacity: 0.3;
     }
 }
+
+
 
 
 /* ########################## MOBILE ###########################*/
@@ -504,6 +535,11 @@ iframe#video-iframe {
 	#yelpwidget {
 		margin: 0 auto;
 	}
+	
+	.dacast-payment .buynow {
+		width: 100%;
+	}
+	
 }
 
 /* iPad Landscape */

@@ -1,0 +1,70 @@
+{	
+	"performers" : [
+		{
+			"id" : "viktor-belmont",
+			"name" : "Viktor Belmont",
+			"shows" : [ "bawdy-11-2017" ]
+		},
+		{
+			"id" : "charra-steele",
+			"name" : "Charra Steele",
+			"shows" : [ "bawdy-11-2017" ]
+		},
+		{
+			"id" : "mr-pam",
+			"name" : "mr Pam",
+			"shows" : [ "bawdy-11-2017", "bawdy-07-2017" ]
+		},
+		{
+			"id" : "auntie-vice",
+			"name" : "Auntie Vice",
+			"shows" : [ "bawdy-11-2017", "bawdy-05-2017" ]
+		},
+		{
+			"id" : "race-bannon",
+			"name" : "Race Bannon",
+			"shows" : [ "bawdy-11-2017", "bawdy-12-2016" ]
+		},
+		{
+			"id" : "amber-lee-baker",
+			"name" : "Amber Lee Baker",
+			"shows" : [ "bawdy-11-2017", "bawdy-10-2016", "bawdy-6-2016" ]
+		},
+		{
+			"id" : "dr-liz-powell",
+			"name" : "Dr. Liz Powell",
+			"shows" : [ "bawdy-10-2017" ]
+		},
+		{
+			"id" : "jessica-cohen",
+			"name" : "Jessica Cohen",
+			"shows" : [ "bawdy-10-2017" ]
+		},
+		{
+			"id" : "reid-mihalko",
+			"name" : "Reid Mihalko",
+			"shows" : [ "bawdy-10-2017", "bawdy1-02-2017" ]
+		},
+		{
+			"id" : "julie-barr",
+			"name" : "Julie Barr",
+			"shows" : [ "bawdy-10-2017" ]
+		},
+		{
+			"id" : "lacyeloo-winkelpleck",
+			"name" : "Lacyeloo Winkelpleck",
+			"shows" : [ "bawdy-10-2017", "bawdy-7-2016" ]
+		},
+		{
+			"id" : "jefferson-bergey",
+			"name" : "Jefferson Bergey",
+			"shows" : [ "bawdy-10-2017", "bawdy-05-2017", "bawdy-12-2016", "bawdy-11-2016", "bawdy-7-2016", "bonafide-7-2016" ]
+		},
+		{
+			"id" : "nathalie-smith",
+			"name" : "Nathalie Smith",
+			"shows" : [ "bawdy-10-2017" ]
+		}
+		
+	]
+}
