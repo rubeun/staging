@@ -5,51 +5,143 @@
  * JS file for VOD/Video On Demand page
  * Dynamically load VOD videos based on user selection
  * 
+ * showsListObj  			: an object with an array of all shows with functions to populate the array with showObj objects.
+ * showObj 						: individual show objects with details and functions to lookup performer names and populate performer list
+ * performersListObj 	: list of performers object with an array of performerObj objects with details of each performer
+ * performerObj 			: individual performer's details in an object (id, name, profile pic URL, etc)
+ *
+ * 1) Initialise performersListObj and populate with getPerformersList
+ * 2) Initialise showsListObj and populate with getShows
+ * 3) when shows populated, initialise getVideoPlayer with first video
+ *
  * Copyright 2017, Rubeun Tan
  * http://www.rubeun.com
  */
 
 
-function showListObj () {
+// ######################### FUNCTIONS #########################
+
+/**
+ * ### showsListObj ###
+ * 
+ * Init:
+ * Initialises array of showObj objects in showsList
+ * 
+ * Functions:
+ * # getShows #
+ * Calls updateShowPerformersListView with JSON for performer details (for name lookup)
+ * Calls updateShowHTMLView to populate each show's htmlView so it can be added to showsHTML
+ * Update DOM with showsHTML  
+ *
+ * # getVideoPlayer #
+ * Sets default video to the first video in the array
+ * Gets template for video player and populates videoHTML
+ * Update DOM with videoHTML
+ *
+ * # updateVideoPlayer #
+ * Takes input showID and looks up its corresponding dacastSRC and title to update video player
+ */
+function showsListObj () {
 	var self = this;
-	self.showList = [];
+	self.showsList = [];
 	self.defaultVideoSRC = "";
 	self.defaultVideoTitle = "";
+	self.videoHTML = "";
+	self.showsHTML = "";
 	
-	self.getShows = function(url, gotAllShows) {
-		$.getJSON(url, function(response) {
+	// # getShows #
+	self.getShows = function(showsURL, performersURL, gotAllShows) {
+		$.getJSON(showsURL, function(response) {
 			//console.log(response);
 			for (var i = 0; i < response.shows.length; i++) {
-				self.showList.push( new showObj(response.shows[i], i) );
-				self.showList[i].updatePerformersListView(function () { 
+				self.showsList.push( new showObj(response.shows[i], i) );
+				self.showsList[i].updateShowPerformersListView(performersURL, function () { 
 					console.log("created performers list for show" + i);
-					self.showList[i].updateHTMLView();
-				})		
-				// populate musical act? maybe inside showObj function?
-				console.log(self.showList[i].htmlView);
+				});		
+				self.showsList[i].updateShowHTMLView(function() {
+					console.log("show html view updated");
+					
+					for (var i = 0; i < self.showsList.length; i++) {
+						//console.log(self.showsList[i].htmlView);
+						self.showsHTML += self.showsList[i].htmlView;
+			
+					}
+					$("#vod-box").html(self.showsHTML);
+					
+					//console.log(self.showsHTML);
+				});
+				
+				// #### TODO: Populate Musical Act. #####
+				
 			} 
 			gotAllShows();		
 		});
 		
-		// set default video as the first video in list
-		//self.defaultVideoSRC = self.showList[0].dacastSRC;
-		//self.defaultVideoTitle = self.showList[0].title;
-				
 	}
 	
-	self.updateDom =  function() {
-		var thisHTML = "";
-		for (var i = 0; i < self.showList.length; i++) {
-			console.log(self.showList[i].htmlView);
-			thisHTML += self.showList[i].htmlView;
+	// # getVideoPlayer #
+	self.getVideoPlayer =  function() {
+		// set default video as the first video in list
+		self.defaultVideoSRC = self.showsList[0].dacastSRC;
+		self.defaultVideoTitle = self.showsList[0].title;
+		//console.log(self.defaultVideoSRC);		
 
-		}
-		$("#vod-box").html(thisHTML);
+		
+		$.get("../video_player.html", function(template) {
+		
+			self.videoHTML = template.replace("{video-title}", self.defaultVideoTitle).replace("{dacast-src}", self.defaultVideoSRC);
+			
+		}).then(function(){
+			//console.log(self.videoHTML);
+			$("#dacast-video-player").html(self.videoHTML);	
+		});
+		
+		//$("#vod-box").html(self.showsHTML);
 	
+	}
+	
+	
+	// # updateVideoPlayer #
+	self.updateVideoPlayer = function(showID) {
+		
+		console.log("Show selected is " + showID);
+		// need to find self.showList.id that matches with showID
+
+		for (var i = 0; i < self.showsList.length; i++) {
+			
+			if (self.showsList[i].id === showID) {
+				
+				self.defaultVideoTitle = self.showsList[i].getVideoTitle();
+				self.defaultVideoSRC = self.showsList[i].getVideoSRC();
+
+				$.get("../video_player.html", function(template) {
+				
+					self.videoHTML = template.replace("{video-title}", self.defaultVideoTitle).replace("{dacast-src}", self.defaultVideoSRC);
+					
+				}).then(function(){
+					//console.log(self.videoHTML);
+					$("#dacast-video-player").html(self.videoHTML);	
+				});
+			
+			}		
+		}
 	}
 	
 }
 
+/**
+ * ### showObj ###
+ * 
+ * Init:
+ * Initialises local variables with details for one show including an array of performers and musical acts
+ * 
+ * Functions:
+ * # updateShowPerformersListView #
+ * Takes input performersURL (JSON of all performer details), uses it to look up names in performersList to populate performersListView
+ * 
+ * # updateShowHTMLView #
+ * Gets template for a show's html and populates htmlView
+ */
 function showObj(show, i) {
 	var self = this;
 	self.index = i;
@@ -61,31 +153,40 @@ function showObj(show, i) {
 	self.secondHalfStartTime = show.secondHalfStartTime;
 	self.dacastSRC = show.dacastSRC;
 	self.facebookURL = show.facebookURL;
-	self.performersList = [];
-	self.musicalActList = [];
+	self.performersList = show.performers;
+	self.musicalActList = show.musicalAct;
 	self.performersListView = "";
 	self.musicalActListView = "";
 	self.notes = show.notes;
 	self.htmlView = "";
 	
-	
-	self.updatePerformersListView = function(gotAllPerformers) {
+	// # updateShowPerformersListView #
+	self.updateShowPerformersListView = function(performersURL, gotAllPerformers) {
 	
 		//console.log("create performers list");
 		//console.log(show.performers);
 		
-		// call function to populate self.performersListView with <li>'s of all the peformers (in performerObj function)
-		for (var i = 0; i < show.performers.length; i++) {
-			self.performersList.push( new performerObj(show.performers[i], i) );
-			self.performersList[i].updatePerformer(function() {
-				//console.log("performer " + i + " updated")
-				console.log(self.performersList[i].name);
-				//self.performersListView += "<li>" + self.performersList[i].name + "</li>";
-				gotAllPerformers();
-			});
-			//console.log(self.performersList[i]);
-		}
-		
+		// populate self.performersListView with <li>'s of all the peformers (by looking up in performers.json)
+		$.getJSON(performersURL, function(response) {
+			console.log("start JSON lookup");
+			for (var i = 0; i < response.performers.length; i++) {
+				console.log("start JSON loop");
+				var performerIndex = self.performersList.indexOf(response.performers[i].id);
+				
+				if (performerIndex !== -1) {
+					console.log(response.performers[performerIndex].name);
+					self.performersListView += "<li>" + response.performers[performerIndex].name + "</li>";
+				} 
+												
+			}
+			
+		}).done(function(){
+			//console.log(self.performersListView);
+			console.log("getJSON succeeded")
+			gotAllPerformers();
+		}).fail(function() {
+			console.log("getJSON failed");
+		});
 		
 		//console.log(self.performersList);
 		
@@ -97,7 +198,8 @@ function showObj(show, i) {
 	
 	}
 	
-	self.updateHTMLView = function(updatedHTMLView) {
+	// # updateShowHTMLView #
+	self.updateShowHTMLView = function(htmlViewUpdated) {
 		
 		// populate self.htmlView with template replacing with self variables
 		$.get("../video_template.html", function(template){
@@ -105,30 +207,84 @@ function showObj(show, i) {
 			self.htmlView = template.replace("{show-id}", self.id).replace("{show-title}", self.title).replace("{show-name}", self.name).replace("{second-half-start}", self.secondHalfStartTime).replace("{performers-list}", self.performersListView).replace("{musical-list}", self.musicalActListView).replace("{facebook-url}", self.facebookURL).replace("{show-note}", self.notes);
 			
 		}).then(function() {
-			updatedHTMLView();
+			htmlViewUpdated();
 			console.log("html view populated");
 			//console.log(self.htmlView);
+		});	
+		
+	}
+	
+	// # getVideoSRC #
+	self.getVideoSRC = function(showID) {
+		return self.dacastSRC;
+	}
+	
+	// # getVideoTitle #
+	self.getVideoTitle = function(showID) {
+		return self.title;
+	}
+	
+	
+}
+
+/**
+ * ### performersListObj ###
+ *
+ * Init:
+ * Initialises an array of performerObj objects in performersList
+ *
+ * Functions:
+ * # getPerformersList #
+ * Takes input performersURL to create performerObj objects and populate performersList array
+ * Calls performerObj's function updatePerformerDetails to populate each performers details
+ */
+function performersListObj() {
+	var self = this;
+	self.performersList = [];
+	
+	// # getPerformersList #
+	self.getPerformersList = function(performersURL, performersListUpdated) {
+		
+		$.getJSON(performersURL, function(response) {
+		
+			for (var i=0; i < response.performers.length; i++) {
+			
+				self.performersList.push( new performerObj(response.performers[i].id, i) );
+				self.performersList[i].updatePerformerDetails(performersURL, function() {
+					console.log("performer details updated");
+				});		
+			
+			}
+		
+		
 		});
-		
-		
-		
+		//console.log(self.performersList);
 		
 	}
 	
 }
+ 
 
+/**
+ * ### performerObj ###
+ *
+ * Init:
+ * Initialises performer details
+ *
+ * Functions:
+ * # updatePerformerDetails #
+ * Takes input performersURL (JSON of all performers details) to look up and update the performer's details
+ */
 function performerObj(performer, i) {
-	var performerURL = "../performers.json";
 
 	var self = this;
 	self.id = performer;
 	self.name = "";
 	self.pictureURL = "/img/performers/" + performer + ".jpg";
 	
-	self.showName = function() { return self.name; }
-	
-	self.updatePerformer = function(performerUpdated) {
-		$.getJSON(performerURL, function(response) {
+	// # updatePerformerDetails #	
+	self.updatePerformerDetails = function(performersURL, performerUpdated) {
+		$.getJSON(performersURL, function(response) {
 			
 			for (var i = 0; i < response.performers.length; i++) {
 				
@@ -146,21 +302,29 @@ function performerObj(performer, i) {
 }
 
 
+// ######################### PAGE INIT #########################
+
 $( document ).ready(function() {	
 
-	var showURL = "../shows.json";
-
-	var shows = new showListObj();
+	// # User defined variables #
+	var showsURL = "../shows.json";
+	var performersURL = "../performers.json";
 	
-	shows.getShows(showURL, function() {
+	
+	// # Start #
+	var performers = new performersListObj();
+	performers.getPerformersList(performersURL, function() {
+		console.log("got performers");
+	});
+	
+	var shows = new showsListObj();
+	shows.getShows(showsURL, performersURL, function() {
 		
 		console.log("got shows");
-		shows.updateDom();
+		shows.getVideoPlayer();
 	
 	});
 	
-	
-
 /*
 	// Initialise & Set Default Video Source and Title for page
 	var dacastSrc = "//iframe.dacast.com/b/52952/f/477152";
@@ -168,113 +332,25 @@ $( document ).ready(function() {
 	document.getElementById('video-title').innerHTML = "Now Playing: " + videoTitle;
 */
 
-	$('#vod-box').accordion({
-		animate: 500,
-		active: 0,
-		collapsible: true,
-		event: "click",
-		heightStyle: "content"
-	});
+	// ####### MUST FIX - Hack because shows not loaded before accordian set #######
+	setTimeout(function() {
 
-
-/*
-	$("#vod-box h4").on("click", function() {
-
-		
-		// Video page ID associates with DaCast video iframe source   
-		switch (this.id) {
-			
-			case "bawdy-11-2017":				
-				videoTitle = "Bawdy Storytelling November 2017";
-				dacastSrc = "//iframe.dacast.com/b/52952/f/477152";
-			break;	 
-			case "bawdy-10-2017":				
-				videoTitle = "Bawdy Storytelling October 2017";
-				dacastSrc = "//iframe.dacast.com/b/52952/f/463595";
-			break;	 
-			case "bawdy-09-2017":				
-				videoTitle = "Bawdy Storytelling September 2017";
-				dacastSrc = "//iframe.dacast.com/b/52952/f/449294";
-			break;	 
-			case "bawdy-07-2017":				
-				videoTitle = "Bawdy Storytelling July 2017";
-				dacastSrc = "//iframe.dacast.com/b/52952/f/430243";
-			break;	 
-			case "bawdy-05-2017":				
-				videoTitle = "Bawdy Storytelling May 2017";
-				dacastSrc = "//iframe.dacast.com/b/52952/f/410368";
-			break;	 
-			case "bawdy1-02-2017":				
-				videoTitle = "Bawdy Storytelling February 2017 7pm";
-				dacastSrc = "//iframe.dacast.com/b/52952/f/378991";
-			break;	 
-			case "bawdy2-02-2017":				
-				videoTitle = "Bawdy Storytelling February 2017 10pm";
-				dacastSrc = "//iframe.dacast.com/b/52952/f/378892";
-			break;	 						
-			case "bawdy-01-2017":				
-				videoTitle = "Bawdy Storytelling January 2017";
-				dacastSrc = "//iframe.dacast.com/b/52952/f/364902";
-			break;	 
-			case "bawdy-12-2016":				
-				videoTitle = "Bawdy Storytelling December 2016";
-				dacastSrc = "//iframe.dacast.com/b/52952/f/354265";
-			break;	 
-			case "bawdy-11-2016":				
-				videoTitle = "Bawdy Storytelling November 2016";
-				dacastSrc = "//iframe.dacast.com/b/52952/f/339340";
-			break;	 
-			case "bawdy-10-2016":				
-				videoTitle = "Bawdy Storytelling October 2016";
-				dacastSrc = "//iframe.dacast.com/b/52952/f/333799";
-			break;	 
-			case "bawdy2-9-2016":				
-				videoTitle = "Bawdy Storytelling September FSF 2016";
-				dacastSrc = "//iframe.dacast.com/b/52952/f/328452";
-			break;	 
-			case "bawdy1-9-2016":				
-				videoTitle = "Bawdy Storytelling September 2016";
-				dacastSrc = "//iframe.dacast.com/b/52952/f/327345";
-			break;	 
-		
-			case "bonafide-9-2016":
-				videoTitle = "Bona Fide Storytelling September 2016";
-				dacastSrc = "//iframe.dacast.com/b/52952/f/327405";
-			break;	 
-		
-			case "bawdy-7-2016":
-				videoTitle = "Bawdy Storytelling July 2016";
-				dacastSrc = "//iframe.dacast.com/b/52952/f/317802";
-			break;	 
-		
-			case "bonafide-7-2016":
-				videoTitle = "Bona Fide Storytelling July 2016";
-				dacastSrc = "//iframe.dacast.com/b/52952/f/317799";
-			break;	 		
-		
-			case "bawdy-6-2016":				
-				videoTitle = "Bawdy Storytelling June 2016";
-				dacastSrc = "//iframe.dacast.com/b/52952/f/327792";
-			break;	 
-
-			case "bonafide-5-2016":				
-				videoTitle = "Bona Fide Storytelling May 2016";
-				dacastSrc = "//iframe.dacast.com/b/52952/f/327769";
-			break;	 
-
-			case "bawdy-summer-package-2016":				
-				videoTitle = "Bawdy Storytelling Summer Package 2016";
-				dacastSrc = "//iframe.dacast.com/b/52952/p/260148";
-			break;	 		
-				
-		}
-		
-		// Change iFrame source to new Video's source & update the video's title		
-		document.getElementById('video-iframe').src = dacastSrc;
-		document.getElementById('video-title').innerHTML = "Now Playing: " + videoTitle;
-		
-	});  
-*/
+		//console.log(shows);
 	
+		$('#vod-box').accordion({
+			animate: 500,
+			active: 0,
+			collapsible: true,
+			event: "click",
+			heightStyle: "content"
+		});
+
+		$("#vod-box h4").on("click", function() {
+			
+			shows.updateVideoPlayer(this.id);
+		
+		});
+	
+	}, 2000);		
     
-});
+}); // !document.ready
