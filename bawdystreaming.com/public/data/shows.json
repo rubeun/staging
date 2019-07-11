@@ -1,0 +1,57 @@
+{	
+	"shows" : [
+		{ 
+			"id" : "bawdy-11-2017",
+			"date" : "Thursday November 16th 2017",
+			"time" : "8pm",
+			"title" : "Bawdy Storytelling November 2017",
+			"name" : "Hurts So Good",
+			"dacastSRC" : "//iframe.dacast.com/b/52952/f/477152",
+			"facebookURL" : "https://www.facebook.com/events/375639069539775/",
+			"performers" : [ "viktor-belmont", "charra-steele", "mr-pam", "auntie-vice", "race-bannon" ],
+			"musicalAct" : [ "amber-lee-baker" ],
+			"secondHalfStartTime" : "1:35:00",
+			"notes" : "Apologies for sound quality, we had a new sound person"
+		},
+		{ 
+			"id" : "bawdy-10-2017",
+			"date" : "Thursday October 16th 2017",
+			"time" : "8pm",
+			"title" : "Bawdy Storytelling October 2017",
+			"name" : "Sexual Napalm",
+			"dacastSRC" : "//iframe.dacast.com/b/52952/f/463595",
+			"facebookURL" : "https://www.facebook.com/events/213561062511331/",
+			"performers" : [ "dr-liz-powell", "jessica-cohen", "reid-mihalko", "julie-barr", "lacyeloo-winkelpleck" ],
+			"musicalAct" : [ "jefferson-bergey", "nathalie-smith" ],
+			"secondHalfStartTime" : "1:40:00",
+			"notes" : ""
+		},
+		{ 
+			"id" : "bawdy-09-2017",
+			"date" : "Wednesday September 13th 2017",
+			"time" : "8pm",
+			"title" : "Bawdy Storytelling September 2017",
+			"name" : "Joyride",
+			"dacastSRC" : "//iframe.dacast.com/b/52952/f/449294",
+			"facebookURL" : "https://www.facebook.com/events/1974377262797586/",
+			"performers" : [ "sister-penny-costal", "kristen-willis", "dossie-easton", "shilo-mccabe", "dixie-de-la-tour" ],
+			"musicalAct" : [ "rachel-lark" ],
+			"secondHalfStartTime" : "1:21:00",
+			"notes" : ""
+		},
+		{ 
+			"id" : "",
+			"date" : "",
+			"time" : "",
+			"title" : "",
+			"name" : "",
+			"dacastSRC" : "",
+			"facebookURL" : "",
+			"performers" : [ "" ],
+			"musicalAct" : [ "" ],
+			"secondHalfStartTime" : "",
+			"notes" : ""
+		}
+		
+	]
+}
