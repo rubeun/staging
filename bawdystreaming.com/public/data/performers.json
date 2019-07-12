@@ -1,6 +1,11 @@
 {	
 	"performers" : [
 		{
+			"id" : "blocked",
+			"name" : "Blocked at request of performer",
+			"shows" : [ "bawdy2-4-2016" ]
+		},
+		{
 			"id" : "viktor-belmont",
 			"name" : "Viktor Belmont",
 			"shows" : [ "bawdy-11-2017" ]

@@ -33,12 +33,7 @@ class Videos extends Component {
     if (!loading) {
       Object.entries(shows).forEach(show => {
         showsArr.push(show[1]);
-        console.log(show[1]);
       })
-      // this.setState((state) => ({
-      //   ...state,
-      //   allShowsArr: showsArr
-      // }));  
       showsLoaded = true;      
     }
 
@@ -56,7 +51,7 @@ class Videos extends Component {
               {showsLoaded === false
                 ? null
                 : showsArr.map((show, index) => (
-                    <li key={index} onClick={() => this.chooseVideo(index)}>{show.title}</li>
+                    <li key={index} onClick={() => this.chooseVideo(index)}>{show.title} ({show.time})</li>
                   ))
               }
             </ul>

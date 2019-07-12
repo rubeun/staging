@@ -35,9 +35,9 @@ body {
 	font-family: 'Josefin Sans', Arial, sans-serif;
 	width: 1200px;
 	min-height: 800px;
-  	border-radius: 10px;		
-  	-webkit-border-radius: 10px;
-  	-moz-border-radius: 10px;
+	border-radius: 10px;		
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
 }
 
 .clear {
@@ -262,7 +262,7 @@ html[xmlns] .clearfix {
 
 iframe#video-iframe {
 	width: 640px;
-	height: 400px;
+	height: 480px;
 }
 
 .vod {
@@ -280,22 +280,12 @@ iframe#video-iframe {
 
 .vod #vod-box li {
 	cursor: pointer;
+	list-style: none;
 }
 
 .vod #vod-box li:hover {
 	color: #ff2222;
 }
-
-#dacast-video-player {
-	opacity: 0;
-	visibility: hidden;
-}
-
-/* Remove blue accessibility outline */
-.ui-accordion-header {
-	outline: none;
-}
-
 
 /* ### ABOUT PAGE ### */
 
@@ -303,7 +293,6 @@ iframe#video-iframe {
 	width: 860px;
 	margin: 20px 20px 0 0;
 	float: left;
-	
 }
 
 #yelpwidget {
@@ -362,31 +351,6 @@ iframe#video-iframe {
 
 
 /* ########################## MOBILE ###########################*/
-
-/* Tablet */
-
-/*
-@media screen  and (max-width: 979px)  {
-	.container {
-		width: 600px;		
-		margin: 0 auto;		
-		background-color: #fff;
-		padding: 10px 10px 10px 65px;
-		min-height: 1000px;
-	}
-	.video-stream {
-		width: 340px;
-		margin: 0 auto;
-		padding: 20px 10px 20px 0;
-	}
-	
-	.chat {
-		width: 210px;
-		padding: 20px 0 20px 10px;
-	}
-
-}
-*/
 
 /* Mobile - iPhone 5 */
 

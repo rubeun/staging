@@ -1,14 +1,8 @@
 // Bawdy API
+
+// JSON data in public/data folder
 const showsObj = "../data/shows.json";
 const performersObj = "../data/performers.json";
-
-
-// function _testFetch() {
-//   fetch(showsObj)
-//     .then((res) => {
-//       console.log(res.json());
-//     })
-// }
 
 // Returns all show data from API
 function _getShows() {

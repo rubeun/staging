@@ -14,7 +14,6 @@ class Player extends Component {
 
   render() {
     //const { showLoading, showURL } = this.props;
-
     return <iframe ref="iframe" id="video-iframe" {...this.props} allowFullScreen={true} />      
   }
 }
@@ -25,6 +24,7 @@ function mapStateToProps({}, {src, width, height, title}) {
     width,
     height,
     title,
+    allow: "autoplay",
     msallowfullscreen: "true",
     oallowfullscreen: "true",
     mozallowfullscreen: "true",
