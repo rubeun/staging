@@ -3,23 +3,34 @@ import { connect } from 'react-redux';
 
 class Player extends Component {
 
-  render() {
-    const { showLoading, showURL } = this.props;
+  // propTypes: {
+  //   src: React.PropTypes.string.isRequired,
+  //   onLoad: React.PropTypes.func
+  // }
+  
+  componentDidMount() {
+//    this.refs.iframe.getDOMNode().addEventListener('load', this.props.onLoad);
+  }
 
-    return (
-      // {showLoading === true
-      //   ? null
-      //   : <iframe id="video-iframe" src={showURL} width="720" height="400" frameBorder="0" scrolling="no" allowFullScreen={true} webkitallowfullscreen="true" mozallowfullscreen="true" oallowfullscreen="true" msallowfullscreen="true"></iframe>
-      // }
-      <iframe id="video-iframe" src={showURL} width="720" height="400" frameBorder="0" scrolling="no" allowFullScreen={true} webkitallowfullscreen="true" mozallowfullscreen="true" oallowfullscreen="true" msallowfullscreen="true" />      
-    )  
+  render() {
+    //const { showLoading, showURL } = this.props;
+
+    return <iframe ref="iframe" id="video-iframe" {...this.props} allowFullScreen={true} />      
   }
 }
 
-function mapStateToProps({}, {showID}) {
+function mapStateToProps({}, {src, width, height, title}) {
   return {
-    showLoading: showID === null,
-    showID
+    src,
+    width,
+    height,
+    title,
+    msallowfullscreen: "true",
+    oallowfullscreen: "true",
+    mozallowfullscreen: "true",
+    webkitallowfullscreen: "true",
+    scrolling: "no",
+    frameBorder: "0"
   }
 }
 

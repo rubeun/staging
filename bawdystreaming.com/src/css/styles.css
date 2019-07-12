@@ -21,8 +21,7 @@
 
 /* ### BASIC LAYOUT ### */
 body {
-	/* background: #000 url("../img/red-curtains-bg.jpg") top left no-repeat; */
-	background: #000;
+	background: #000 url("/img/red-curtains-bg.jpg") top left no-repeat;
 	background-size: 100%;
 }
 
@@ -60,34 +59,34 @@ header#bawdy-header {
 
 /* navigation */
 nav {
-	display: block;
-  	margin-bottom: 10px;
+	display: flex;
+	margin-bottom: 10px;
 }
 nav ul {
-  	list-style: none;
-  	font-size: 20px;
-  	padding-left: 0px;
+	list-style: none;
+	font-size: 20px;
+	padding-left: 0px;
 }
 nav ul li {
-  	display: inline;
+	display: inline;
 }
 nav ul li a {
-  	display: block;
-  	float: left;
-  	padding: 3px 6px;
-  	color: #575c7d;
-  	text-decoration: none;
-  	font-weight: bold;
+	display: block;
+	float: left;
+	padding: 3px 6px;
+	color: #575c7d;
+	text-decoration: none;
+	font-weight: bold;
 }
 nav ul li a:hover {
-  	background: #dd1111;
-  	color: #fff;
-  	-webkit-border-radius: 3px;
-  	-moz-border-radius: 3px;
-  	border-radius: 3px;
-  	padding: 3px 6px;
-  	margin: 0;
-  	text-decoration: none;
+	background: #dd1111;
+	color: #fff;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	padding: 3px 6px;
+	margin: 0;
+	text-decoration: none;
 }
 
 nav ul li a.active {
@@ -135,8 +134,7 @@ html[xmlns] .clearfix {
 /* ### HOME PAGE ### */
 
 .home-promo {
-	/* background: #000 url("../img/Promo-Bawdy-CoupleWatching1a.jpg") top left no-repeat; */
-	background: #000;
+	background: #000 url("/img/Promo-Bawdy-CoupleWatching1a.jpg") top left no-repeat;
 	width: 800px;
 	height: 450px;
 	margin: 20px auto 50px auto;
@@ -271,8 +269,6 @@ iframe#video-iframe {
 	width: 540px;
 	padding: 20px 0 20px 10px;
 	float: left;
-	opacity: 0;
-	visibility: hidden;
 }
 
 .vod #vod-box {
@@ -282,28 +278,12 @@ iframe#video-iframe {
 	background: #000;
 }
 
-.vod #vod-box h4 {
-	background: #000;
-	color: #ddd;
-	font-size: 0.8em;
+.vod #vod-box li {
+	cursor: pointer;
 }
 
-.vod #vod-box h4.ui-state-active {
-	color: #cd0a0a;
-}
-
-.vod #vod-box div {
-	background: #000;
-	color: #ddd;
-	font-size: 0.6em;
-}
-
-.vod #vod-box a {
-	color: #777;
-}
-
-.vod #vod-box a:hover {
-	color: #cd0a0a;
+.vod #vod-box li:hover {
+	color: #ff2222;
 }
 
 #dacast-video-player {
@@ -497,6 +477,7 @@ iframe#video-iframe {
 
 	iframe#video-iframe {
 		width: 100%;
+		height: 500px;
 		margin: 0 auto;
 	}
 	
@@ -568,8 +549,13 @@ iframe#video-iframe {
 		padding: 20px 0 20px 10px;
 	}
 
+	.chat #chat-box {
+		height: 450px;
+	}
+
 	iframe#video-iframe {
 		width: 580px;
+		height: 600px;
 	}
 	
 	#about-content {
@@ -604,8 +590,13 @@ iframe#video-iframe {
 		padding: 20px 0 20px 10px;
 	}
 	
+	.chat #chat-box {
+		height: 560px;
+	}
+
 	iframe#video-iframe {
 		width: 580px;
+		height: 600px;
 	}
 
 	#about-content {

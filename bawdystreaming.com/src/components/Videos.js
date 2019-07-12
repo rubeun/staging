@@ -5,13 +5,23 @@ import Player from './Player';
 class Videos extends Component {
 
   state = {
-    showID: "",
-    showTitle: "",
-    dacastSRC: ""
+    currentShowIndex: 0,
+    currentShowTitle: "Bawdy Storytelling May 2018",
+    currentShowSRC: "//iframe.dacast.com/b/52952/f/559508"
   }
 
-  chooseVideo = (showID) => {
-    console.log(showID);
+  chooseVideo = (selectedShowIndex) => {
+    const shows = this.props;
+
+    let selectedShowTitle = shows.shows[selectedShowIndex].title;
+    let selectedShowSRC = shows.shows[selectedShowIndex].dacastSRC;
+
+    this.setState((state) => ({
+      ...state,
+      currentShowIndex: selectedShowIndex,
+      currentShowTitle: selectedShowTitle,
+      currentShowSRC: selectedShowSRC
+    }));
   }
 
   render() {
@@ -22,19 +32,22 @@ class Videos extends Component {
     // put all pets info into an array for easier mapping
     if (!loading) {
       Object.entries(shows).forEach(show => {
-        showsArr.push(show);
+        showsArr.push(show[1]);
+        console.log(show[1]);
       })
-      // shows.map((show) => {
-      //   showsArr.push(show);
-      // })
+      // this.setState((state) => ({
+      //   ...state,
+      //   allShowsArr: showsArr
+      // }));  
       showsLoaded = true;      
     }
 
 
     return (
       <div className='videos-main'>
-        
-        <Player />
+
+        <p className='video-title'>{this.state.currentShowTitle}</p>
+        <Player src={this.state.currentShowSRC} title={this.state.currentShowTitle} width="720" height="400" />
               
         <div className="vod">
           <h3>Bawdy Storytelling Videos</h3>
@@ -42,8 +55,8 @@ class Videos extends Component {
             <ul>
               {showsLoaded === false
                 ? null
-                : showsArr.map((show) => (
-                    <li key={show}>{show.id}</li>
+                : showsArr.map((show, index) => (
+                    <li key={index} onClick={() => this.chooseVideo(index)}>{show.title}</li>
                   ))
               }
             </ul>
