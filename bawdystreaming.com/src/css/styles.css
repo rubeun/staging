@@ -58,6 +58,11 @@ header#bawdy-header {
 }
 
 /* navigation */
+
+.nav-icon {
+	display: none;
+}
+
 nav {
 	display: flex;
 	margin-bottom: 10px;
@@ -428,6 +433,62 @@ iframe#video-iframe {
 		padding: 10px;
 	}
 
+	.nav-icon {
+		display: block;
+		width: 30px;
+		height: 30px;
+	}
+
+	nav {
+		margin: 0;
+	}
+
+	ul.collapsed {
+		width: 100%;
+		display: block;
+		overflow: hidden;
+		max-height: 0;
+		-moz-transition-duration: 0.4s;
+		-webkit-transition-duration: 0.4s;
+		-o-transition-duration: 0.4s;
+		transition-duration: 0.4s;
+		-moz-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+		-webkit-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+		-o-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+		transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+	}	
+
+	ul.collapsed li {
+		display: flex;
+		font-size: 1.2em;
+		padding: 10px 0px;
+		margin: 0px 0px;
+		width: 100%;
+	}
+
+	ul.is-expanded {
+		overflow: hidden;
+		max-height: 500px; /* approximate max height */
+		-moz-transition-duration: 0.4s;
+		-webkit-transition-duration: 0.4s;
+		-o-transition-duration: 0.4s;
+		transition-duration: 0.4s;
+		-moz-transition-timing-function: ease-in;
+		-webkit-transition-timing-function: ease-in;
+		-o-transition-timing-function: ease-in;
+		transition-timing-function: ease-in;
+	}
+	ul.is-expanded li {
+		display: flex;
+		padding: 10px 0px;
+		margin: 0px 0px;
+		width: 100%;
+		font-size: 1.2em;
+	}
+
+	ul.is-expander li a {
+		display: block;
+	}
 
 	.home-promo {
 		width: 100%;
@@ -534,7 +595,7 @@ iframe#video-iframe {
 /* iPad Portrait */
 @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
 	.container {
-		width: 900px;	
+		width: 97%;	
 		margin: 0 auto;		
 		padding: 10px;
 		min-height: 700px;
@@ -559,7 +620,7 @@ iframe#video-iframe {
 	}
 
 	iframe#video-iframe {
-		width: 580px;
+		width: 100%;
 		height: 600px;
 	}
 

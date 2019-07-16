@@ -23,6 +23,7 @@ class App extends Component {
         <Fragment>
           <LoadingBar />
           <div className='container'>
+            <h1 className="page-title">Bawdy Streaming</h1>
             <Nav />
             {this.props.loading === true
               ? null
