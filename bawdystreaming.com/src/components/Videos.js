@@ -45,8 +45,8 @@ class Videos extends Component {
         <Player src={this.state.currentShowSRC} title={this.state.currentShowTitle} width="720" height="400" />
               
         <div className="vod">
-          <h3>Bawdy Storytelling Videos</h3>
           <div id="vod-box">
+            <h3 className='blink'>Select Show</h3>
             <ul>
               {showsLoaded === false
                 ? null

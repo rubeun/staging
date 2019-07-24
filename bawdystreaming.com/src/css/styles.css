@@ -266,21 +266,30 @@ html[xmlns] .clearfix {
 /* ### VOD PAGE ### */
 
 iframe#video-iframe {
-	width: 640px;
-	height: 480px;
+	width: 600px;
+	height: 550px;
+	float: left;
 }
 
 .vod {
-	width: 540px;
-	padding: 20px 0 20px 10px;
+	width: 580px;
+	padding: 0 0 20px 10px;
 	float: left;
 }
 
 .vod #vod-box {
 	min-height: 380px;
-	padding: 10px 0;
+	padding: 10px 20px;
 	border-radius: 7px;
 	background: #000;
+}
+
+.vod #vod-box h3 {
+
+}
+
+.vod #vod-box ul {
+	padding: 0 10px 10px 10px;
 }
 
 .vod #vod-box li {

@@ -23,22 +23,22 @@ class Nav extends Component {
         <nav id='cssmenu'>
           <ul className={`clear ${navMenuExpanded ? "is-expanded" : "collapsed"}`}>
             <li>
-              <NavLink to='/' exact activeClassName='active'>
+              <NavLink to='/' exact activeClassName='active' onClick={() => this.handleToggleMenu()}>
                 Home
               </NavLink>
             </li>
             <li>
-              <NavLink to='/live' activeClassName='active'>
+              <NavLink to='/live' activeClassName='active' onClick={() => this.handleToggleMenu()}>
                 Live Show
               </NavLink>
             </li>
             <li>
-              <NavLink to='/vod' activeClassName='active'>
+              <NavLink to='/vod' activeClassName='active' onClick={() => this.handleToggleMenu()}>
                 VOD/Past Shows
               </NavLink>
             </li>
             <li>
-              <NavLink to='/about' activeClassName='active'>
+              <NavLink to='/about' activeClassName='active' onClick={() => this.handleToggleMenu()}>
                 About
               </NavLink>
             </li>
