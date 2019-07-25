@@ -22,6 +22,11 @@ class Videos extends Component {
       currentShowTitle: selectedShowTitle,
       currentShowSRC: selectedShowSRC
     }));
+
+    // for mobile, scroll to top of page to view video player after a short delay
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 1000)
   }
 
   render() {
