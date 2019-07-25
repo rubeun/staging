@@ -25,7 +25,11 @@ class Videos extends Component {
 
     // for mobile, scroll to top of page to view video player after a short delay
     setTimeout(() => {
-      window.scrollTo(0, 0);
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth"
+      });
     }, 1000)
   }
 
