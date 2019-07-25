@@ -8,13 +8,13 @@ export default function Live() {
     <Fragment>
       <div className="video-stream clear">
         <h3 id="stream-title">Bawdy Live Web Stream</h3>
-        <p>Next Stream: <span id="live-title"></span></p>
         
         <Player src={liveShowURL} title={liveShowTitle} width="720" height="400" />
 
-        <p>If you have any issues during the show, please text Rubeun at (415) 937-7236.</p>
-        <p>To watch show after broadcast has completed, please go to the <a href="/videos/">VOD</a> page</p>
+        <p className="stream-info">If you have any issues during the show, please text Rubeun at (415) 937-7236.</p>
+        <p className="stream-info">To watch show after broadcast has completed, please go to the <a href="/videos/">VOD</a> page</p>
       </div>			
+
       <div className="chat">
         <h3>Bawdy Storytelling Chat</h3>
         <div id="chat-name">

@@ -168,6 +168,11 @@ html[xmlns] .clearfix {
 	padding: 20px 10px 20px 0;
 }
 
+.stream-info {
+	float: left;
+}
+
+
 /* Right Column - Chat */
 #chat-name {
 	padding: 10px 0;
@@ -267,8 +272,9 @@ html[xmlns] .clearfix {
 
 iframe#video-iframe {
 	width: 600px;
-	height: 550px;
+	height: 620px;
 	float: left;
+	margin-bottom: 30px;
 }
 
 .vod {
@@ -285,7 +291,7 @@ iframe#video-iframe {
 }
 
 .vod #vod-box h3 {
-
+	
 }
 
 .vod #vod-box ul {
@@ -526,6 +532,16 @@ iframe#video-iframe {
 		min-height: 85%;
 		border-radius: 7px;
 		background: #000;
+	}
+
+	.vod #vod-box {
+		text-align: center;
+	}
+
+	.vod #vod-box li {
+		padding: 15px 10px;
+		border: white solid 1px;
+		text-align: center;
 	}
 
 	.video-stream {

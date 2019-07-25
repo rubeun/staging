@@ -46,7 +46,7 @@ class Videos extends Component {
               
         <div className="vod">
           <div id="vod-box">
-            <h3 className='blink'>Select Show</h3>
+            <h3>Select Show</h3>
             <ul>
               {showsLoaded === false
                 ? null
